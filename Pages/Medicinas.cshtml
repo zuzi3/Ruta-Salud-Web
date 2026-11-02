@@ -1,0 +1,50 @@
+@page
+@model CarnetSaludWeb.Pages.MedicinasModel
+@{
+    ViewData["Title"] = "Mis Medicinas";
+}
+
+<div class="card border-0 shadow-sm rounded-3 overflow-hidden mb-4">
+    <!-- Encabezado dinamico adaptado al tema global -->
+    <div class="card-header text-white p-3 carnet-header-dinamico">
+        <h4 class="mb-0 fw-bold">
+            <i class="bi bi-capsule me-2"></i>Mis Medicamentos Recetados
+        </h4>
+    </div>
+
+    <!-- Cuerpo de la tarjeta -->
+    <div class="card-body p-4">
+        @if (Model.ListaMedicamentos != null && Model.ListaMedicamentos.Any())
+        {
+            <div class="row">
+                @foreach (var med in Model.ListaMedicamentos)
+                {
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-0 bg-light p-3 h-100 shadow-sm">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="fw-bold text-dark mb-0">@med.Nombre</h5>
+                                <span class="badge carnet-header-dinamico">@med.Dosis</span>
+                            </div>
+                            <p class="text-muted mb-1">
+                                <i class="bi bi-clock me-1"></i><strong>Frecuencia:</strong> @med.Frecuencia
+                            </p>
+                            <p class="text-muted small mb-2">
+                                <i class="bi bi-info-circle me-1"></i><strong>Indicaciones:</strong> @med.Indicaciones
+                            </p>
+                            <small class="text-secondary">
+                                <i class="bi bi-calendar-event me-1"></i>Recetado el: @med.FechaPrescripcion
+                            </small>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="text-center text-muted py-5">
+                <i class="bi bi-prescription2 display-4 d-block mb-2 text-secondary opacity-50"></i>
+                <p class="mb-0">No tienes recetas o medicamentos registrados actualmente.</p>
+            </div>
+        }
+    </div>
+</div>

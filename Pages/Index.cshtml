@@ -1,0 +1,122 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<div class="container mt-3">
+
+    <!-- Formulario de Inicio de Sesión (Se muestra solo si NO ha iniciado sesión) -->
+    @if (!(User.Identity?.IsAuthenticated ?? false))
+    {
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow border-0" style="border-radius: 12px;">
+                    <div class="card-body p-4">
+                        <h4 class="fw-bold text-center mb-3" style="color: #4A148C;">Iniciar Sesión</h4>
+
+                        @if (!string.IsNullOrEmpty(Model.MensajeError))
+                        {
+                            <div class="alert alert-danger py-2 small text-center" role="alert">
+                                @Model.MensajeError
+                            </div>
+                        }
+
+                        <form method="post" asp-page-handler="Login">
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold text-secondary">Correo Electrónico</label>
+                                <input type="email" asp-for="Email" class="form-control" placeholder="ejemplo@correo.com" required />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label small fw-bold text-secondary">Contraseña</label>
+                                <input type="password" asp-for="Password" class="form-control" placeholder="••••••••" required />
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 fw-bold py-2" style="background-color: #4A148C; border: none; border-radius: 8px;">
+                                Ingresar
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Banner Principal / Publicidad e Informes de Salud -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm text-white" style="background: linear-gradient(135deg, #4A148C 0%, #7B1FA2 100%); border-radius: 15px;">
+                <div class="card-body p-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center justify-content-between">
+                    <div class="mb-3 mb-md-0">
+                        <span class="badge bg-warning text-dark mb-2 fw-bold">Campañas de Salud 2026</span>
+                        <h2 class="fw-bold mb-1">Campaña de Vacunación e Invierno</h2>
+                        <p class="mb-0 text-white-50">Refuerza tu protección en el centro de salud más cercano. ¡Revisa los requisitos en tu carnet!</p>
+                    </div>
+                    <a href="#como-funciona" class="btn btn-light btn-lg fw-bold text-dark px-4 shadow-sm">Saber más</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Explicativa: Cómo funciona el Carnet Digital -->
+    <div class="text-center mb-4" id="como-funciona">
+        <h3 class="fw-bold" style="color: #4A148C;">¿Cómo funciona tu Carnet Digital de Salud?</h3>
+        <p class="text-muted">Centraliza tu información médica, previsión y atenciones en un solo lugar seguro.</p>
+    </div>
+
+    <!-- Bloques Informativos Interactivos (Acordeón) -->
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-10">
+            <div class="accordion shadow-sm" id="accordionInicio" style="border-radius: 12px; overflow: hidden;">
+                
+                <!-- Ítem 1: Mi Carnet y Ficha Médica -->
+                <div class="accordion-item border-0 border-bottom">
+                    <h2 class="accordion-header" id="headingUno">
+                        <button class="accordion-button fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUno" aria-expanded="true" aria-controls="collapseUno" style="background-color: #F5F5F5;">
+                            📌 1. Mi Carnet, Previsión y Ficha de Emergencia
+                        </button>
+                    </h2>
+                    <div id="collapseUno" class="accordion-collapse collapse show" aria-labelledby="headingUno" data-bs-parent="#accordionInicio">
+                        <div class="accordion-body text-secondary">
+                            Consulta tu tipo de previsión (<strong>Fonasa A-D o Isapre</strong>), tus credenciales registradas y tu ficha clínica rápida. Incluye información crítica de seguridad como <strong>discapacidad, alergias médicas y antecedentes crónicos familiares</strong>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ítem 2: Citas Médicas -->
+                <div class="accordion-item border-0 border-bottom">
+                    <h2 class="accordion-header" id="headingDos">
+                        <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDos" aria-expanded="false" aria-controls="collapseDos" style="background-color: #F5F5F5;">
+                            📅 2. Gestión Integral de Citas Médicas
+                        </button>
+                    </h2>
+                    <div id="collapseDos" class="accordion-collapse collapse" aria-labelledby="headingDos" data-bs-parent="#accordionInicio">
+                        <div class="accordion-body text-secondary">
+                            Desde el módulo de citas podrás gestionar tus horas médicas en tiempo real con tres opciones clave:
+                            <ul class="mt-2 mb-0">
+                                <li><strong>Tomar Cita:</strong> Reserva atención con médicos generales o especialistas.</li>
+                                <li><strong>Autorizar Cita:</strong> Confirma la asistencia a tus horas programadas.</li>
+                                <li><strong>Anular Cita:</strong> Cancelar disponibilidad de forma rápida si no puedes asistir.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ítem 3: Exámenes y Diagnósticos -->
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header" id="headingTres">
+                        <button class="accordion-button collapsed fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTres" aria-expanded="false" aria-controls="collapseTres" style="background-color: #F5F5F5;">
+                            🔬 3. Exámenes Clínicos y Diagnósticos
+                        </button>
+                    </h2>
+                    <div id="collapseTres" class="accordion-collapse collapse" aria-labelledby="headingTres" data-bs-parent="#accordionInicio">
+                        <div class="accordion-body text-secondary">
+                            Accede al menú interactivo para <strong>tomar/agendar nuevos exámenes</strong> o <strong>actualizar y revisar resultados</strong> con descarga directa de informes oficiales en formato PDF para tus médicos tratantes.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

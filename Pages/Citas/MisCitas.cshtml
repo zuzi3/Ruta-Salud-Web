@@ -1,0 +1,62 @@
+@page
+@model CarnetSaludWeb.Pages.Citas.MisCitasModel
+@{
+    ViewData["Title"] = "Mis Citas Médicas";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0 rounded-3 overflow-hidden">
+        <!-- Encabezado dinamico adaptado al tema global -->
+        <div class="card-header text-white text-center py-3 carnet-header-dinamico">
+            <h3 class="mb-0 fw-bold">Mis Citas Agendadas</h3>
+            <small class="opacity-75">Historial y próximas atenciones médicas</small>
+        </div>
+        
+        <div class="card-body p-4">
+            @if (Model.CitasRegistradas != null && Model.CitasRegistradas.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Especialidad</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Centro de Salud</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var cita in Model.CitasRegistradas)
+                            {
+                                <tr>
+                                    <!-- Texto dinámico según el tema -->
+                                    <td class="fw-bold carnet-texto-dinamico">@cita.Especialidad</td>
+                                    <td>@cita.Fecha</td>
+                                    <td>@cita.Hora</td>
+                                    <td>@cita.CentroSalud</td>
+                                    <td>
+                                        <span class="badge @(cita.Estado == "Confirmada" ? "bg-success" : "bg-warning text-dark")">
+                                            @cita.Estado
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="text-center py-5">
+                    <i class="bi bi-calendar-x display-4 d-block mb-2 text-secondary opacity-50"></i>
+                    <p class="text-muted mb-3">No tienes citas agendadas actualmente.</p>
+                    <!-- Boton dinámico según el tema -->
+                    <a asp-page="/Citas/Agendar" class="btn text-white fw-semibold px-4 shadow-sm carnet-btn-dinamico">
+                        Agendar una Cita
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

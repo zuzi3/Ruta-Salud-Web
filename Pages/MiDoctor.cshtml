@@ -1,0 +1,74 @@
+@page
+@model CarnetSaludWeb.Pages.MiDoctorModel
+@{
+    ViewData["Title"] = "Mi Doctor";
+}
+
+<div class="container mt-4">
+    <!-- Doctor de Cabecera Actual -->
+    <div class="card shadow border-0 mb-4" style="border-radius: 12px; overflow: hidden;">
+        <div class="card-header text-white py-3" style="background-color: #4A148C;">
+            <h4 class="mb-0 fw-bold"><i class="bi bi-star-fill text-warning me-2"></i>Mi Doctor de Cabecera</h4>
+        </div>
+        <div class="card-body p-4">
+            @if (Model.DoctorCabecera != null && !string.IsNullOrWhiteSpace(Model.DoctorCabecera.Nombre))
+            {
+                <div class="row align-items-center">
+                    <div class="col-md-2 text-center mb-3 mb-md-0">
+                        <div class="rounded-circle d-inline-flex align-items-center justify-content-center text-white fw-bold" 
+                             style="width: 80px; height: 80px; background-color: #7B1FA2; font-size: 1.8rem;">
+                            @(string.IsNullOrWhiteSpace(Model.DoctorCabecera.Nombre) ? "?" : Model.DoctorCabecera.Nombre.Substring(0, 1))
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <h4 class="fw-bold text-dark mb-1">@Model.DoctorCabecera.Nombre</h4>
+                        <p class="text-primary fw-bold mb-1">@Model.DoctorCabecera.Especialidad</p>
+                        <p class="text-muted small mb-0"><i class="bi bi-geo-alt-fill me-1"></i>@Model.DoctorCabecera.CentroMedico</p>
+                    </div>
+                    <div class="col-md-3 text-md-end mt-3 mt-md-0">
+                        <a asp-page="/Citas/Agendar" class="btn text-white w-100" style="background-color: #4A148C;">
+                            Agendar Cita
+                        </a>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-0">Aún no has seleccionado un doctor de cabecera.</p>
+            }
+        </div>
+    </div>
+
+    <!-- Historial de Doctores Anteriores -->
+    <div class="card shadow-sm border-0" style="border-radius: 12px;">
+        <div class="card-body p-4">
+            <h5 class="fw-bold mb-3" style="color: #4A148C;">
+                <i class="bi bi-clock-history me-2"></i>Doctores que te han atendido anteriormente
+            </h5>
+            <p class="text-muted small mb-4">A continuación encuentras a los profesionales con los que has tenido atenciones o exámenes previos:</p>
+
+            <div class="row">
+                @if (Model.HistorialDoctores != null && Model.HistorialDoctores.Any())
+                {
+                    @foreach (var doc in Model.HistorialDoctores)
+{
+    <div class="col-md-6 mb-3">
+        <div class="card border-0 shadow-sm p-3">
+            <h5 class="fw-bold mb-1">@doc.Nombre</h5>
+            <span class="badge bg-secondary mb-2">@doc.Especialidad</span>
+            <!-- Asegúrate de llamar a la propiedad del backend -->
+            <p class="text-muted small mb-0">@doc.CentroMedico</p> 
+        </div>
+    </div>
+}
+                }
+                else
+                {
+                    <div class="col-12 text-center text-muted py-3">
+                        No hay registro de atenciones previas en el sistema.
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

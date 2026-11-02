@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CarnetSaludWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CarnetSaludWeb.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <!-- Unica Barra de Navegacion Principal -->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom shadow-sm mb-3">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center fw-bold text-white" asp-page="/Index">
+                    <!-- Logo SVG inline -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 70" height="45" style="max-width: 220px;" aria-label="Logo RutaSalud">
+                      <defs>
+                        <linearGradient id="rutaGradiente" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stop-color="#10b981" />
+                          <stop offset="100%" stop-color="#059669" />
+                        </linearGradient>
+                        <linearGradient id="caminoGradiente" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stop-color="#34d399" stop-opacity="0.3" />
+                          <stop offset="100%" stop-color="#10b981" />
+                        </linearGradient>
+                      </defs>
+
+                      <g transform="translate(10, 5)">
+                        <path d="M 30,5 C 16.2,5 5,16.2 5,30 C 5,45 25,60 30,65 C 35,60 55,45 55,30 C 55,16.2 43.8,5 30,5 Z" fill="url(#rutaGradiente)" />
+                        <circle cx="30" cy="28" r="15" fill="#ffffff" />
+                        <path d="M 28,19 H 32 V 26 H 39 V 30 H 32 V 37 H 28 V 30 H 21 V 26 H 28 Z" fill="#059669" />
+                        <path d="M 5,52 Q 20,40 38,56 T 65,48" fill="none" stroke="url(#caminoGradiente)" stroke-width="4" stroke-linecap="round" />
+                      </g>
+
+                      <g transform="translate(85, 45)">
+                        <text x="0" y="0" font-family="'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="28" fill="#ffffff" letter-spacing="-0.5">Ruta</text>
+                        <text x="65" y="0" font-family="'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="28" fill="#34d399" letter-spacing="-0.5">Salud</text>
+                        <text x="2" y="16" font-family="'Segoe UI', Roboto, sans-serif" font-weight="500" font-size="11" fill="#e5e7eb" letter-spacing="0.5">Tu Carnet y Historial Digital</text>
+                      </g>
+                    </svg>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContenido" aria-controls="navbarContenido"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContenido">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- Descargar App -->
+                        <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" id="appDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-qr-code-scan me-1"></i> Acceso Portal Web
+    </a>
+    <div class="dropdown-menu dropdown-menu-end p-3 text-center shadow rounded-4" aria-labelledby="appDropdown" style="width: 260px;">
+        <h6 class="fw-bold text-primary mb-1">RutaSalud Oficial</h6>
+        <p class="small text-muted mb-2">Escanea para acceder directamente a la plataforma:</p>
+        
+        <!-- Genera dinámicamente el QR apuntando al dominio oficial -->
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://carnetsalud.myvnc.com" 
+             alt="QR RutaSalud Oficial" 
+             class="img-fluid border rounded p-1 mb-3" />
+
+        <a href="https://carnetsalud.myvnc.com" target="_blank" class="btn btn-sm btn-primary w-100 rounded-pill font-weight-bold">
+            <i class="bi bi-box-arrow-up-right me-1"></i> Ir a RutaSalud
+        </a>
+    </div>
+</li>
+
+                        <!-- Desplegable Mi Carnet -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white fw-bold" href="#" id="navbarDropdownCarnet" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                📋 Mi Carnet
+                            </a>
+                            <ul class="dropdown-menu shadow" aria-labelledby="navbarDropdownCarnet">
+                                <li><a class="dropdown-item" asp-page="/Carnet">📋 Ver Mi Ficha Digital</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-page="/Citas/Agendar">📅 Agendar Cita Médica</a></li>
+                                <li><a class="dropdown-item" asp-page="/Examenes">🧪 Mis Exámenes y Resultados</a></li>
+                                <li><a class="dropdown-item" asp-page="/Especialidades">🩺 Especialidades</a></li>
+                                <li><a class="dropdown-item" asp-page="/Medicinas">💊 Medicamentos</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-page="/MiDoctor">👨‍⚕️ Mi Doctor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-page="/Mapa">🗺️ Mapa</a>
+                        </li>
+                        <!-- Pestaña Nosotros incorporada correctamente -->
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-semibold" asp-page="/Nosotros">ℹ️ Nosotros</a>
+                        </li>
+                    </ul>
+
+                    <!-- Selector de Tema + Login -->
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="d-flex align-items-center gap-1 bg-black bg-opacity-25 px-2 py-1 rounded-pill">
+                            <span class="small text-white opacity-75 me-1 ms-1" style="font-size: 0.75rem;">Tema:</span>
+                            <button type="button" class="btn btn-sm rounded-circle p-0 border border-white" style="background-color: #0d6efd; width: 18px; height: 18px;" onclick="aplicarTemaGlobal('azul')" title="Azul Clínico"></button>
+                            <button type="button" class="btn btn-sm rounded-circle p-0 border border-white" style="background-color: #198754; width: 18px; height: 18px;" onclick="aplicarTemaGlobal('verde')" title="Verde Salud"></button>
+                            <button type="button" class="btn btn-sm rounded-circle p-0 border border-white" style="background-color: #e83e8c; width: 18px; height: 18px;" onclick="aplicarTemaGlobal('rosado')" title="Rosado Amigable"></button>
+                            <button type="button" class="btn btn-sm rounded-circle p-0 border border-white" style="background-color: #4A148C; width: 18px; height: 18px;" onclick="aplicarTemaGlobal('morado')" title="Morado Institucional"></button>
+                        </div>
+
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container d-flex justify-content-between align-items-center py-2">
+            <div>
+                &copy; 2026 - CarnetSaludWeb - <a asp-page="/Privacy">Privacidad</a>
+            </div>
+            <div>
+                <a asp-page="/Nosotros" class="text-muted text-decoration-none me-3">Sobre Nosotros</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script>
+        function aplicarTemaGlobal(color) {
+            document.body.setAttribute('data-tema', color);
+            localStorage.setItem('carnet_tema_global', color);
+        }
+
+        // Cargar el tema guardado al iniciar la navegacion
+        (function () {
+            const temaGuardado = localStorage.getItem('carnet_tema_global') || 'morado';
+            document.body.setAttribute('data-tema', temaGuardado);
+        })();
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

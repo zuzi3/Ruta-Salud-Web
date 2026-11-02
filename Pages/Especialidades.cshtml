@@ -1,0 +1,115 @@
+@page
+@model CarnetSaludWeb.Pages.EspecialidadesModel
+@{
+    ViewData["Title"] = "Especialidades";
+}
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <!-- Título Principal -->
+        <div class="col-12 mb-3 d-flex align-items-center">
+            <i class="bi bi-card-checklist text-primary fs-2 me-2"></i>
+            <h2 class="fw-bold text-primary mb-0">Informe por Especialidad</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Barra Lateral: Lista de Especialidades -->
+        <div class="col-md-3 mb-4">
+            <div class="list-group shadow-sm">
+                @if (Model.Especialidades.Any())
+                {
+                    @foreach (var esp in Model.Especialidades)
+                    {
+                        bool esSeleccionada = esp.Nombre.Equals(Model.EspecialidadSeleccionada, StringComparison.OrdinalIgnoreCase);
+                        <a asp-page="./Especialidades" 
+                           asp-route-especialidad="@esp.Nombre" 
+                           class="list-group-item list-group-item-action d-flex align-items-center p-3 @(esSeleccionada ? "active fw-bold" : "")">
+                            <i class="bi bi-@esp.Icono me-3 fs-5"></i>
+                            <span>@esp.Nombre</span>
+                        </a>
+                    }
+                }
+                else
+                {
+                    <div class="list-group-item text-muted text-center py-3">
+                        No hay especialidades disponibles.
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Panel Principal: Exámenes de la Especialidad -->
+        <div class="col-md-9">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <!-- Pestañas de navegación superiores -->
+                    <ul class="nav nav-tabs mb-3 border-bottom">
+                        <li class="nav-item">
+                            <a class="nav-link active fw-bold" href="#">Mis Exámenes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-secondary" href="#">Mi Doctor</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-secondary" href="#">Próximas Horas</a>
+                        </li>
+                    </ul>
+
+                    <h4 class="fw-bold text-primary">Exámenes de @Model.EspecialidadSeleccionada</h4>
+                    <p class="text-muted small">Listado de exámenes asociados a la especialidad seleccionada.</p>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle border">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Examen / Título</th>
+                                    <th>Doctor</th>
+                                    <th class="text-end">Resultado / Informe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Examenes.Any())
+                                {
+                                    @foreach (var examen in Model.Examenes)
+                                    {
+                                        <tr>
+                                            <td class="fw-bold">@examen.Fecha</td>
+                                            <td>
+                                                <div class="fw-bold text-dark">@examen.Titulo</div>
+                                                <small class="text-muted">Cat: @examen.Categoria</small>
+                                            </td>
+                                            <td>Dr(a): @examen.Doctor</td>
+                                            <td class="text-end">
+                                                @if (!string.IsNullOrEmpty(examen.ArchivoPdf))
+                                                {
+                                                    <a href="@examen.ArchivoPdf" target="_blank" class="btn btn-success btn-sm">
+                                                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> Disponible PDF
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">Sin PDF</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center py-5 text-muted">
+                                            <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                            No se encontraron exámenes registrados para esta especialidad.
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

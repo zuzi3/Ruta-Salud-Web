@@ -1,0 +1,108 @@
+@page "/Cuenta/Registrarse"
+@model CarnetSaludWeb.Pages.Cuenta.RegistrarseModel
+@{
+    ViewData["Title"] = "Formulario de Registro";
+}
+
+<div class="container py-4" style="background-color: #F3E5F5; min-height: 100vh; border-radius: 12px;">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            
+            <div class="text-center mb-4">
+                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-white shadow-sm p-3 mb-2" style="width: 90px; height: 90px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#4A148C" class="bi bi-person-badge-fill" viewBox="0 0 16 16">
+                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2zm4.5 0a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6m5 2.755C12.146 12.825 10.623 12 8 12s-4.146.826-5 1.755V14a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1z"/>
+                    </svg>
+                </div>
+                <h2 class="fw-bold" style="color: #4A148C;">Formulario de Registro</h2>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMensaje))
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @Model.ErrorMensaje
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <form method="post" class="p-4 bg-white shadow-sm rounded-3">
+                
+                <div class="form-floating mb-3">
+                    <input type="text" asp-for="Input.Nombre" class="form-control text-uppercase" placeholder="Nombre completo" maxlength="50" required />
+                    <label asp-for="Input.Nombre">Nombre completo</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="text" asp-for="Input.Rut" class="form-control" placeholder="RUT (ej: 12.345.678-9)" maxlength="12" required />
+                    <label asp-for="Input.Rut">RUT (ej: 12.345.678-9)</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="tel" asp-for="Input.Contacto" class="form-control" placeholder="+56912345678" maxlength="12" required />
+                    <label asp-for="Input.Contacto">N° de Contacto (+56912345678)</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="tel" asp-for="Input.Emergencia" class="form-control" placeholder="+56912345678" maxlength="12" required />
+                    <label asp-for="Input.Emergencia">N° de Emergencia (+56912345678)</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select asp-for="Input.Prevision" class="form-select" required>
+                        <option value="" selected disabled>Selecciona tu previsión</option>
+                        <option value="Fonasa A">Fonasa A</option>
+                        <option value="Fonasa B">Fonasa B</option>
+                        <option value="Fonasa C">Fonasa C</option>
+                        <option value="Fonasa D">Fonasa D</option>
+                        <option value="Isapre">Isapre</option>
+                        <option value="Capredena / Dipreca">Capredena / Dipreca</option>
+                        <option value="Particular">Particular</option>
+                    </select>
+                    <label asp-for="Input.Prevision">Previsión de Salud</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select asp-for="Input.GrupoSanguineo" class="form-select" required>
+                        <option value="" selected disabled>Selecciona tu grupo sanguíneo</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                    <label asp-for="Input.GrupoSanguineo">Grupo Sanguíneo</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select asp-for="Input.TieneDiscapacidad" class="form-select" required>
+                        <option value="No" selected>No</option>
+                        <option value="Sí">Sí</option>
+                    </select>
+                    <label asp-for="Input.TieneDiscapacidad">¿Presenta situación de discapacidad?</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="email" asp-for="Input.Correo" class="form-control" placeholder="nombre@ejemplo.com" required />
+                    <label asp-for="Input.Correo">Correo electrónico</label>
+                </div>
+
+                <div class="form-floating mb-4">
+                    <input type="password" asp-for="Input.Clave" class="form-control" placeholder="Contraseña" maxlength="20" required />
+                    <label asp-for="Input.Clave">Contraseña</label>
+                </div>
+
+                <button type="submit" class="btn w-100 text-white mb-2 py-2 fs-6 fw-semibold" style="background-color: #7B1FA2;">
+                    Registrar
+                </button>
+
+                <a asp-page="/Index" class="btn w-100 text-white py-2 fs-6 fw-semibold" style="background-color: #9C27B0;">
+                    Volver al Inicio
+                </a>
+
+            </form>
+        </div>
+    </div>
+</div>

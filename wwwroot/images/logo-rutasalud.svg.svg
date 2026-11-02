@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 70" width="100%" height="70" aria-label="Logo RutaSalud">
+  <defs>
+    <linearGradient id="rutaGradiente" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="caminoGradiente" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#10b981" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(10, 5)">
+    <path d="M 30,5 C 16.2,5 5,16.2 5,30 C 5,45 25,60 30,65 C 35,60 55,45 55,30 C 55,16.2 43.8,5 30,5 Z" fill="url(#rutaGradiente)" />
+    <circle cx="30" cy="28" r="15" fill="#ffffff" />
+    <path d="M 28,19 H 32 V 26 H 39 V 30 H 32 V 37 H 28 V 30 H 21 V 26 H 28 Z" fill="#059669" />
+    <path d="M 5,52 Q 20,40 38,56 T 65,48" fill="none" stroke="url(#caminoGradiente)" stroke-width="4" stroke-linecap="round" />
+  </g>
+
+  <g transform="translate(85, 45)">
+    <text x="0" y="0" font-family="'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="28" fill="#1f2937" letter-spacing="-0.5">Ruta</text>
+    <text x="65" y="0" font-family="'Segoe UI', Roboto, sans-serif" font-weight="700" font-size="28" fill="#10b981" letter-spacing="-0.5">Salud</text>
+    <text x="2" y="16" font-family="'Segoe UI', Roboto, sans-serif" font-weight="500" font-size="11" fill="#6b7280" letter-spacing="0.5">Tu Carnet y Historial Digital</text>
+  </g>
+</svg>

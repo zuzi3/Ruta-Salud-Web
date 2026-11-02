@@ -1,0 +1,212 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+/* Estilos Base del Encabezado */
+.carnet-header {
+    transition: background 0.4s ease-in-out;
+}
+
+/* Paletas Seleccionables */
+.carnet-header.tema-azul {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;
+}
+
+.carnet-header.tema-verde {
+    background: linear-gradient(135deg, #198754 0%, #146c43 100%) !important;
+}
+
+.carnet-header.tema-rosado {
+    background: linear-gradient(135deg, #e83e8c 0%, #d63384 100%) !important;
+}
+
+.carnet-header.tema-morado {
+    background: linear-gradient(135deg, #4c1d95 0%, #6f42c1 100%) !important;
+}
+
+/* Variables de tema global */
+:root {
+    --color-principal: #4A148C;
+    --color-principal-hover: #380e6b;
+    --color-fondo-suave: #f8f9fa;
+}
+
+/* Aplicación de variables a elementos clave de la web */
+.navbar-custom {
+    background-color: var(--color-principal) !important;
+    transition: background-color 0.3s ease;
+}
+
+.text-primary, .card-header.text-primary {
+    color: var(--color-principal) !important;
+}
+
+.btn-primary {
+    background-color: var(--color-principal) !important;
+    border-color: var(--color-principal) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-principal-hover) !important;
+    border-color: var(--color-principal-hover) !important;
+}
+
+/* Paletas Seleccionables */
+body[data-tema="azul"] {
+    --color-principal: #0d6efd;
+    --color-principal-hover: #0b5ed7;
+}
+
+body[data-tema="verde"] {
+    --color-principal: #198754;
+    --color-principal-hover: #157347;
+}
+
+body[data-tema="rosado"] {
+    --color-principal: #e83e8c;
+    --color-principal-hover: #d63384;
+}
+
+body[data-tema="morado"] {
+    --color-principal: #4A148C;
+    --color-principal-hover: #380e6b;
+}
+
+/* Color predeterminado de la barra */
+.navbar-custom {
+    background-color: #4A148C;
+    transition: background-color 0.3s ease;
+}
+
+/* Cambios de color segun el atributo data-tema del <body> */
+body[data-tema="azul"] .navbar-custom {
+    background-color: #0d6efd !important;
+}
+
+body[data-tema="verde"] .navbar-custom {
+    background-color: #198754 !important;
+}
+
+body[data-tema="rosado"] .navbar-custom {
+    background-color: #e83e8c !important;
+}
+
+body[data-tema="morado"] .navbar-custom {
+    background-color: #4A148C !important;
+}
+
+/* Estilo base con transición suave */
+.carnet-header-dinamico {
+    background-color: #4A148C; /* Color morado por defecto */
+    transition: background-color 0.3s ease;
+}
+
+/* Adaptación según el tema global seleccionado */
+body[data-tema="azul"] .carnet-header-dinamico {
+    background-color: #0d6efd !important;
+}
+
+body[data-tema="verde"] .carnet-header-dinamico {
+    background-color: #198754 !important;
+}
+
+body[data-tema="rosado"] .carnet-header-dinamico {
+    background-color: #e83e8c !important;
+}
+
+body[data-tema="morado"] .carnet-header-dinamico {
+    background-color: #4A148C !important;
+}
+
+/* --- ESTILOS DINÁMICOS PARA BOTONES Y TEXTO --- */
+
+/* Botón principal */
+.carnet-btn-dinamico {
+    background-color: #4A148C;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.carnet-btn-dinamico:hover {
+    filter: brightness(0.9);
+    color: #fff;
+}
+
+/* Color de texto para títulos/labels */
+.carnet-texto-dinamico {
+    color: #4A148C;
+    transition: color 0.3s ease;
+}
+
+/* Adapta los botones y texto al tema seleccionado */
+body[data-tema="azul"] .carnet-btn-dinamico { background-color: #0d6efd !important; }
+body[data-tema="azul"] .carnet-texto-dinamico { color: #0d6efd !important; }
+
+body[data-tema="verde"] .carnet-btn-dinamico { background-color: #198754 !important; }
+body[data-tema="verde"] .carnet-texto-dinamico { color: #198754 !important; }
+
+body[data-tema="rosado"] .carnet-btn-dinamico { background-color: #e83e8c !important; }
+body[data-tema="rosado"] .carnet-texto-dinamico { color: #e83e8c !important; }
+
+body[data-tema="morado"] .carnet-btn-dinamico { background-color: #4A148C !important; }
+body[data-tema="morado"] .carnet-texto-dinamico { color: #4A148C !important; }
+
+/* Tema por defecto / Morado */
+:root, body[data-tema="morado"] {
+    --carnet-color-principal: #4A148C;
+}
+
+body[data-tema="azul"] {
+    --carnet-color-principal: #0d6efd;
+}
+
+body[data-tema="verde"] {
+    --carnet-color-principal: #198754;
+}
+
+body[data-tema="rosado"] {
+    --carnet-color-principal: #e83e8c;
+}
+
+/* Aplicación de variables a las clases dinámicas */
+.navbar-custom,
+.carnet-header-dinamico,
+.carnet-btn-dinamico {
+    background-color: var(--carnet-color-principal) !important;
+}
+
+.carnet-texto-dinamico {
+    color: var(--carnet-color-principal) !important;
+}
+
+.carnet-border-dinamico {
+    border-left-color: var(--carnet-color-principal) !important;
+}

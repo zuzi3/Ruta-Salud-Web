@@ -1,0 +1,41 @@
+@page
+@model CarnetSaludWeb.Pages.Cuenta.IniciarSesionModel
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="container py-5" style="background-color: #F3E5F5; min-height: 80vh; border-radius: 12px;">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-5">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold">Bienvenido a Carnet Salud</h3>
+                <p class="text-muted">Ingresa tus credenciales para acceder al Carnet Digital</p>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.ErrorMensaje))
+            {
+                <div class="alert alert-danger text-center" role="alert">
+                    @Model.ErrorMensaje
+                </div>
+            }
+
+            <form method="post" class="p-4 bg-white shadow-sm rounded-3">
+                <!-- Correo o RUT -->
+                <div class="form-floating mb-3">
+                    <input type="text" asp-for="Email" class="form-control" placeholder="Correo o RUT" required />
+                    <label asp-for="Email">Correo Electrónico o RUT</label>
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+
+                <!-- Clave -->
+                <div class="form-floating mb-4">
+                    <input type="password" asp-for="Password" class="form-control" placeholder="Clave" maxlength="20" required />
+                    <label asp-for="Password">Contraseña</label>
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Iniciar Sesión</button>
+            </form>
+        </div>
+    </div>
+</div>

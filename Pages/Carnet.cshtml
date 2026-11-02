@@ -1,0 +1,225 @@
+@page
+@model CarnetSaludWeb.Pages.CarnetModel
+@{
+    ViewData["Title"] = "Mi Carnet Digital";
+}
+
+<div class="container my-4">
+
+    <!-- AGREGA EL BANNER AQUÍ (Al comienzo de la página) -->
+    @if (Model.EsConsultaMedica)
+    {
+        <div class="alert alert-success d-flex align-items-center justify-content-between rounded-3 shadow-sm mb-4">
+            <div>
+                <i class="bi bi-shield-check-fill fs-4 me-2"></i>
+                <strong>Consulta Médica Autorizada:</strong> Visualizando Ficha Clínica Completa (Modo Lectura)
+            </div>
+            <span class="badge bg-success">Permiso Validado por PIN</span>
+        </div>
+    }
+
+    <!-- Selector de Temas (Fuera de la tarjeta del paciente) -->
+    <div class="d-flex align-items-center justify-content-end mb-3 gap-2">
+        <span class="small text-muted fw-semibold">Color del carnet:</span>
+        <button type="button" class="btn btn-sm rounded-circle p-2 border shadow-sm" style="background-color: #0d6efd; width: 24px; height: 24px;" onclick="cambiarTema('azul')" title="Azul Clínico"></button>
+        <button type="button" class="btn btn-sm rounded-circle p-2 border shadow-sm" style="background-color: #198754; width: 24px; height: 24px;" onclick="cambiarTema('verde')" title="Verde Salud"></button>
+        <button type="button" class="btn btn-sm rounded-circle p-2 border shadow-sm" style="background-color: #e83e8c; width: 24px; height: 24px;" onclick="cambiarTema('rosado')" title="Rosado Amigable"></button>
+        <button type="button" class="btn btn-sm rounded-circle p-2 border shadow-sm" style="background-color: #4A148C; width: 24px; height: 24px;" onclick="cambiarTema('morado')" title="Morado"></button>
+    </div>
+
+    <!-- Encabezado Unificado del Carnet -->
+    <div id="carnetHeader" class="card border-0 text-white p-4 mb-4 shadow-sm carnet-header tema-morado" style="border-radius: 12px;">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="fw-bold mb-1">@Model.Paciente.NombreCompleto</h2>
+                <p class="mb-0 opacity-75">
+                    <strong>RUT:</strong> @Model.Paciente.Rut | 
+                    <strong>Edad:</strong> @Model.Paciente.Edad años | 
+                    <strong>Previsión:</strong> @Model.Paciente.Prevision
+                </p>
+            </div>
+            <span class="badge bg-warning text-dark px-3 py-2 fs-6 fw-bold">Carnet Activo</span>
+        </div>
+    </div>
+
+    <!-- 1. Ficha Clínica -->
+    <div class="card mb-4 border-0 shadow-sm">
+        <div class="card-header bg-light fw-bold text-primary">
+            👤 1. Ficha Clínica, Salud y Discapacidad
+        </div>
+        <div class="card-body">
+            <h6 class="text-danger fw-bold">Alergias Conocidas</h6>
+            <div class="p-3 mb-3 bg-light rounded border text-dark">
+                @Model.Paciente.Alergias
+            </div>
+
+            <h6 class="text-primary fw-bold">Credencial Discapacidad & Previsión</h6>
+            <p class="mb-2"><strong>RND:</strong> @Model.Paciente.TipoDiscapacidad</p>
+
+            <h6 class="text-primary fw-bold">Salud Mental</h6>
+            <p class="mb-0 text-muted">@Model.Paciente.SaludMentalInfo</p>
+        </div>
+    </div>
+
+    <!-- 2. Citas Médicas -->
+<div class="card mb-4 border-0 shadow-sm">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+        <span class="fw-bold text-primary">📅 2. Citas Médicas Programadas</span>
+        
+        @if (!Model.EsConsultaMedica)
+        {
+            <a href="/Citas/Agendar" class="btn btn-sm btn-success">+ Agendar Nueva Cita</a>
+        }
+        else
+        {
+            <span class="badge bg-secondary"><i class="bi bi-lock-fill me-1"></i> Modo Solo Lectura</span>
+        }
+    </div>
+    <div class="card-body p-0">
+        @if (Model.ListaCitas.Any())
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Especialidad</th>
+                            <th>Centro / Doctor</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Estado</th>
+                            @if (!Model.EsConsultaMedica)
+                            {
+                                <th class="text-end">Acción</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cita in Model.ListaCitas)
+                        {
+                            <tr>
+                                <td class="fw-bold">@cita.Especialidad</td>
+                                <td>@cita.Doctor</td>
+                                <td>@cita.Fecha</td>
+                                <td>@cita.Hora hrs</td>
+                                <td>
+                                    @if (cita.Estado == "Anulada")
+                                    {
+                                        <span class="badge bg-danger">Anulada</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">@cita.Estado</span>
+                                    }
+                                </td>
+                                @if (!Model.EsConsultaMedica)
+                                {
+                                    <td class="text-end">
+                                        @if (cita.Estado != "Anulada")
+                                        {
+                                            <form method="post" asp-page-handler="AnularCita" asp-route-citaId="@cita.Id" class="d-inline" onsubmit="return confirm('¿Está seguro de que desea anular esta cita?');">
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">Anular</button>
+                                            </form>
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="p-4 text-center text-muted">No tienes citas médicas programadas actualmente.</div>
+        }
+    </div>
+</div>
+
+    <!-- 3. Antecedentes Médicos y Familiares -->
+    <div class="card mb-4 border-0 shadow-sm">
+        <div class="card-header bg-light fw-bold text-primary">
+            🧬 3. Antecedentes Médicos y Familiares
+        </div>
+        <div class="card-body">
+            @if (Model.Paciente.AntecedentesFamiliares.Any())
+            {
+                <ul class="mb-0">
+                    @foreach (var antecedente in Model.Paciente.AntecedentesFamiliares)
+                    {
+                        <li>@antecedente</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted mb-0">Sin antecedentes registrados.</p>
+            }
+        </div>
+    </div>
+
+    <!-- 4. Historial de Exámenes -->
+    <div class="card mb-4 border-0 shadow-sm">
+        <div class="card-header bg-light fw-bold text-primary">
+            📋 4. Historial de Exámenes
+        </div>
+        <div class="card-body">
+            @if (Model.Paciente.Examenes.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Examen</th>
+                                <th>Tipo</th>
+                                <th>Fecha</th>
+                                <th>Médico</th>
+                                <th>Documento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var examen in Model.Paciente.Examenes)
+                            {
+                                <tr>
+                                    <td>@examen.Nombre</td>
+                                    <td>@examen.Tipo</td>
+                                    <td>@examen.Fecha</td>
+                                    <td>@examen.Doctor</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(examen.ArchivoPdf))
+                                        {
+                                            <a href="@examen.ArchivoPdf" target="_blank" class="btn btn-sm btn-outline-primary">Ver PDF</a>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No disponible</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted mb-0">No hay exámenes registrados para este paciente.</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function cambiarTema(color) {
+            const header = document.getElementById('carnetHeader');
+            header.classList.remove('tema-azul', 'tema-verde', 'tema-rosado', 'tema-morado');
+            header.classList.add('tema-' + color);
+            localStorage.setItem('carnet_tema_preferido', color);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const temaGuardado = localStorage.getItem('carnet_tema_preferido') || 'morado';
+            cambiarTema(temaGuardado);
+        });
+    </script>
+}

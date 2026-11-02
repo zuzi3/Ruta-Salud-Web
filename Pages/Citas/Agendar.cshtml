@@ -1,0 +1,108 @@
+@page
+@model CarnetSaludWeb.Pages.Citas.AgendarModel
+@{
+    ViewData["Title"] = "Agendar Cita";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <!-- Alerta de Bloqueo o Error desde TempData/Model -->
+            @if (TempData["MensajeError"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show text-center mb-4 rounded-3 shadow-sm" role="alert">
+                    <i class="bi bi-shield-exclamation fs-4 me-2"></i>
+                    <strong>@TempData["MensajeError"]</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.MensajeExito))
+            {
+                <div class="alert alert-success alert-dismissible fade show text-center mb-4 rounded-3 shadow-sm" role="alert">
+                    <i class="bi bi-check-circle-fill me-2"></i> @Model.MensajeExito
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+                <!-- Encabezado dinámico -->
+                <div class="card-header text-white text-center py-3 carnet-header-dinamico">
+                    <h3 class="mb-0 fw-bold">Agendar Cita Médica</h3>
+                    <small class="opacity-75">Selecciona el servicio y el horario para tu atención</small>
+                </div>
+
+                <div class="card-body p-4">
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+                        <!-- Especialidad -->
+                        <div class="mb-3">
+                            <label asp-for="Input.Especialidad" class="form-label fw-bold carnet-texto-dinamico">Especialidad</label>
+                            <select asp-for="Input.Especialidad" class="form-select form-select-lg" required>
+                                <option value="">-- Seleccione una especialidad --</option>
+                                @if (Model.Especialidades != null)
+                                {
+                                    @foreach (var esp in Model.Especialidades)
+                                    {
+                                        <option value="@esp">@esp</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="Input.Especialidad" class="text-danger"></span>
+                        </div>
+
+                        <!-- Fecha y Hora -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.Fecha" class="form-label fw-bold carnet-texto-dinamico">Fecha</label>
+                                <input asp-for="Input.Fecha" type="date" class="form-control form-control-lg" required />
+                                <span asp-validation-for="Input.Fecha" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="Input.Hora" class="form-label fw-bold carnet-texto-dinamico">Hora</label>
+                                <select asp-for="Input.Hora" class="form-select form-select-lg" required>
+                                    <option value="">-- Seleccione una hora --</option>
+                                    @if (Model.HorasDisponibles != null)
+                                    {
+                                        @foreach (var hora in Model.HorasDisponibles)
+                                        {
+                                            <option value="@hora">@hora</option>
+                                        }
+                                    }
+                                </select>
+                                <span asp-validation-for="Input.Hora" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Centro de Salud -->
+                        <div class="mb-4">
+                            <label asp-for="Input.CentroSalud" class="form-label fw-bold carnet-texto-dinamico">Centro de Salud</label>
+                            <select asp-for="Input.CentroSalud" class="form-select form-select-lg" required>
+                                <option value="">-- Seleccione un Centro de Salud --</option>
+                                @if (Model.CentrosSalud != null)
+                                {
+                                    @foreach (var centro in Model.CentrosSalud)
+                                    {
+                                        <option value="@centro">@centro</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="Input.CentroSalud" class="text-danger"></span>
+                        </div>  
+
+                        <!-- Botón Confirmar Dinámico -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-lg text-white fw-bold carnet-btn-dinamico">
+                                <i class="bi bi-calendar-check-fill me-2"></i>Confirmar Agendamiento
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

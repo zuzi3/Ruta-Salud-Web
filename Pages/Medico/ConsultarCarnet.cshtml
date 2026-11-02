@@ -1,0 +1,56 @@
+@page
+@model CarnetSaludWeb.Pages.Medico.ConsultarCarnetModel
+@{
+    ViewData["Title"] = "Consulta Médica de Carnet";
+}
+
+<div class="container mt-4" style="max-width: 600px;">
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
+            <h4 class="mb-0"><i class="bi bi-hospital me-2"></i>Acceso para Profesionales de Salud</h4>
+            <small>Consulta de Carnet Digital del Paciente</small>
+        </div>
+        <div class="card-body p-4">
+
+            @if (!string.IsNullOrEmpty(Model.MensajeError))
+            {
+                <div class="alert alert-danger text-center" role="alert">
+                    @Model.MensajeError
+                </div>
+            }
+
+            @if (!Model.EsperandoCodigo)
+            {
+                <!-- PASO 1: Ingreso de RUT del Paciente -->
+                <form method="post" asp-page-handler="SolicitarAcceso">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">RUT del Paciente</label>
+                        <input type="text" asp-for="RutPaciente" class="form-control form-control-lg" placeholder="Ej: 14.700.467-2" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill font-weight-bold">
+                        <i class="bi bi-envelope-check-fill me-2"></i> Solicitar Permiso al Paciente
+                    </button>
+                </form>
+            }
+            else
+            {
+                <!-- PASO 2: Ingreso de Código enviado al correo -->
+                <div class="alert alert-info text-center rounded-3 mb-3">
+                    <i class="bi bi-info-circle-fill fs-5 me-1"></i>
+                    Se ha enviado un PIN de autorización al correo del paciente (<strong>@Model.EmailOculto</strong>).
+                </div>
+
+                <form method="post" asp-page-handler="ValidarCodigo">
+                    <input type="hidden" asp-for="RutPaciente" />
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Código PIN (6 dígitos)</label>
+                        <input type="text" asp-for="CodigoPin" class="form-control form-control-lg text-center fs-3 fw-bold" placeholder="000000" maxlength="6" required />
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg w-100 rounded-pill font-weight-bold">
+                        <i class="bi bi-unlock-fill me-2"></i> Verificar y Abrir Ficha
+                    </button>
+                </form>
+            }
+        </div>
+    </div>
+</div>

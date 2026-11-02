@@ -1,0 +1,29 @@
+@page
+@model CarnetSaludWeb.Pages.MapaModel
+@{
+    ViewData["Title"] = "Ubicación del Centro";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm border-0" style="border-radius: 12px; overflow: hidden;">
+        <div class="card-header text-white text-center py-3" style="background-color: #4A148C;">
+            <h3 class="mb-0 fw-bold">Centros de Salud Cercanos</h3>
+            <small>Ubicación geográfica del recinto de atención</small>
+        </div>
+        <div class="card-body p-4 text-center">
+            <h5 class="fw-bold mb-3" style="color: #4A148C;">CESFAM / Centro Médico Central</h5>
+            
+            <!-- Mapa interactivo embebido con OpenStreetMap -->
+            <div class="ratio ratio-16x9 rounded-3 shadow-sm mb-3">
+                <iframe 
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=-70.7000%2C-33.5000%2C-70.6000%2C-33.4000&amp;layer=mapnik" 
+                    style="border: 0;" 
+                    allowfullscreen="" 
+                    loading="lazy">
+                </iframe>
+            </div>
+            
+            <p class="text-muted mb-0"><small>Muestra de geolocalización integrada para la red de salud.</small></p>
+        </div>
+    </div>
+</div>
